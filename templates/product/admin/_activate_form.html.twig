@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('admin_product_activate', {'id': product.id}) }}" onsubmit="return confirm('Voulez-vous vraiment ajouter ce produit au catalogue ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ product.id) }}">
+    <button class="btn btn-success">Ajouter au catalogue</button>
+</form>

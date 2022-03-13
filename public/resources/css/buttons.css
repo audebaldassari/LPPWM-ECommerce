@@ -1,0 +1,9 @@
+a.btn.btn-main, button.btn.btn-main {
+	color: white;
+	background-color: var(--main-color);
+}
+
+a.btn.btn-outline-main, button.btn.btn-outline-main {
+	color: var(--main-color);
+	border-color: var(--main-color);
+}

@@ -1,0 +1,54 @@
+{{ form_start(form, {
+	'attr': {'class': 'form-sm'},
+}) }}
+	<div class="form-outline mb-4">
+		{{ form_widget(form.username, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.username, "Nom d'utilisateur", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.username) }}
+	</div>
+
+	<div class="form-outline mb-4">
+		{{ form_widget(form.address, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.address, "Adresse", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.address) }}
+	</div>
+
+	<div class="form-outline mb-4">
+		{{ form_widget(form.city, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.city, "Ville", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.city) }}
+	</div>
+
+	<div class="form-outline mb-4">
+		{{ form_widget(form.postalCode, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.postalCode, "Code postal", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.postalCode) }}
+	</div>
+
+<button type="submit" class="btn btn-main btn-block">Enregistrer</button>
+
+{{ form_end(form) }}

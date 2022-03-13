@@ -1,0 +1,28 @@
+<div class="card product-card">
+	<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+		<img
+			src="{{ product.image }}"
+			class="img-fluid"
+			alt="Image de {{ product.title }}"
+		/>
+		<a href="{{ path('product_show', {'id': product.id}) }}">
+			<div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+		</a>
+	</div>
+	<div class="card-body">
+		<h5 class="card-title">{{ product.title }}</h5>
+		<p class="card-text">
+			{{ product.price|number_format(2, ',', '.') }}€
+
+			<small class="d-block">
+				{% if product.quantity > 15 and not product.isRemoved %}
+					<span class="in-stock">En stock</span>
+				{% elseif product.quantity > 0 and not product.isRemoved %}
+					<span class="last-items">Plus que {{ product.quantity }} en stock</span>
+				{% else %}
+					<span class="unavailable">Indisponible</span>
+				{% endif %}
+			</small>
+		</p>
+	</div>
+</div>

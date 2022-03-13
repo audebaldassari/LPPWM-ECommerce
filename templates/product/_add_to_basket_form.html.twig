@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('add_product_to_basket', {'id': product.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('add_to_basket' ~ product.id) }}">
+    <div class="form-outline mt-4" style="max-width: 163px">
+        <input type="number" id="quantityInput" name="quantity" class="form-control" min="1" max="{{ product.quantity }}" value="1" />
+        <label class="form-label" for="typeNumber">Quantité</label>
+    </div>
+    <button class="btn btn-main btn-block-sm mt-1">Ajouter au panier</button>
+</form>

@@ -1,0 +1,10 @@
+<form method="post" action="{{ path(app.user ? 'basket_remove_item' : 'basket_remove_session_item', {id: item.id}) }}">
+    {% if app.user %}
+        <input type="hidden" name="_token" value="{{ csrf_token('basket_remove_item' ~ app.user.id) }}">
+	{% else %}
+		<input type="hidden" name="id" value="{{ item.id }}">
+	{% endif %}
+    <button type="submit" class="btn btn-main">
+        Confirmer
+    </button>
+</form>

@@ -1,0 +1,18 @@
+<div class="card category-card">
+	<div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+		<img
+			src="{{ category.image }}"
+			class="img-fluid"
+			alt="Image de {{ category.label }}"
+		/>
+		<a href="{{ path('product_category_show', {'id': category.id}) }}">
+			<div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+		</a>
+	</div>
+	<div class="card-body">
+		<h5 class="card-title">{{ category.label }}</h5>
+			<p class="card-text">
+				<small class="text-muted">{{ category.activeProducts|length }} produit{{ category.activeProducts|length is not same as(1) ? 's' : '' }}</small>
+			</p>
+	</div>
+</div>

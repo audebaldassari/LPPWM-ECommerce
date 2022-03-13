@@ -1,0 +1,47 @@
+<div class="card basket-item-card">
+	<div class="card-body">
+		<div class="row">
+			<div class="col col-2 image-container">
+				<img class="image" src="{{ item.product.image }}" alt="{{ item.product.title }}"/>
+			</div>
+			<div class="col col-10 col-sm-6">
+				<h5 class="h6 title">
+					<a href="{{ path('product_show', {id: item.product.id}) }}">
+						{{ item.product.title }}
+					</a>
+				</h5>
+				{% if item.product.quantity > 15 %}
+					<div class="in-stock">En stock</div>
+				{% elseif item.product.quantity > 0 %}
+					<div class="last-items">Plus que {{ item.product.quantity|number_format(0, ',', '.') }} en stock</div>
+				{% else %}
+					<div class="unavailable">Indisponible</div>
+				{% endif %}
+			</div>
+			<div class="col col-6 col-sm-2">
+				<div class="quantity">Quantité : {{ item.quantity|number_format(0, ',', '.') }}</div>
+			</div>
+			<div class="col col-6 col-sm-2">
+				<div class="price">{{ (item.product.price * item.quantity)|number_format(2, ',', '.') }}€</div>
+			</div>
+		</div>
+		<div class="row mt-sm-3">
+			<div class="col">
+				<button
+					class="btn btn-sm btn-main"
+					data-mdb-toggle="modal"
+					data-mdb-target="#modalEditItem{{ item.id }}"
+				>
+					Modifier
+				</button>
+				<button
+					class="btn btn-sm btn-outline-main"
+					data-mdb-toggle="modal"
+					data-mdb-target="#modalRemoveItem{{ item.id }}"
+				>
+					Retirer
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

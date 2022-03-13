@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/resources/css/products.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="product">
+        <h1 class="title">{{ product.title }}</h1>
+
+		<div class="row">
+			<div class="col col-sm-3 col-12 image-container">
+				<img class="image" src="{{ product.image }}" alt="{{ product.title }}"/>
+			</div>
+			<div class="col col-sm-9 col-12">
+				<h2 class="mt-4">{{ product.price|number_format(2, ',', '.') }}€</h2>
+				
+				{% if product.quantity > 15 and not product.isRemoved %}
+					<div class="in-stock">En stock</div>
+				{% elseif product.quantity > 0 and not product.isRemoved %}
+					<div class="last-items">Plus que {{ product.quantity|number_format(0, ',', '.') }} en stock</div>
+				{% else %}
+					<div class="unavailable">Indisponible</div>
+				{% endif %}
+
+				<div class="d-grid d-sm-block gap-2">
+					{% if product.quantity is not same as(0) and not product.isRemoved %}
+						{% if not is_granted('ROLE_ADMIN') %}
+							{% if app.user and not app.user.hasProductInBasket(product) or not app.user and not isProductInSessionBasket %}
+								{{ include('product/_add_to_basket_form.html.twig') }}
+							{% else %}
+								{{ include('product/_remove_from_basket_form.html.twig') }}
+							{% endif %}
+						{% elseif is_granted('ROLE_ADMIN') %}
+							<button
+								class="btn btn-main btn-block-sm mt-4"
+								data-mdb-toggle="modal"
+  								data-mdb-target="#modalAdmin"
+							>
+								Ajouter au panier
+							</button>
+						{% endif %}
+					{% else %}
+						<button class="btn btn-main btn-block-sm mt-4" disabled>Ajouter au panier</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+    </div>
+
+	{% if app.user and is_granted('ROLE_ADMIN') %}
+		<div
+			class="modal fade"
+			id="modalAdmin"
+			tabindex="-1"
+			aria-labelledby="modalAdminLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalAdminLabel">Compte administrateur</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-mdb-dismiss="modal"
+							aria-label="Fermer"
+						></button>
+					</div>
+					<div class="modal-body">
+						Vous ne pouvez pas réaliser d'achats avec un compte administrateur. Veuillez vous connecter avec un compte utilisateur.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-main" data-mdb-dismiss="modal">
+							Fermer
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% elseif not app.user %}
+		<div
+			class="modal fade"
+			id="modalNotLogged"
+			tabindex="-1"
+			aria-labelledby="modalNotLoggedLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalNotLoggedLabel">Connexion nécéssaire</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-mdb-dismiss="modal"
+							aria-label="Fermer"
+						></button>
+					</div>
+					<div class="modal-body">
+						Vous devez vous connecter pour pouvoir réaliser des achats.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-main" data-mdb-dismiss="modal">
+							Fermer
+						</button>
+						<a type="button" class="btn btn-main" href="{{ path('app_login') }}">
+							Connexion
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

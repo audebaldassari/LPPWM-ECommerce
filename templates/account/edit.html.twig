@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block stylesheets %}
+    <link href="/resources/css/account.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="account">
+        <h1 class="title">Modifier mon profil</h1>
+
+		{{ include('account/_form.html.twig') }}
+{% endblock %}

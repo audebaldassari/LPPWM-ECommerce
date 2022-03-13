@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la catégorie{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {{ include('assets/return.html.twig', {'route': 'admin_product_category_index'}) }}
+        <h1 class="mb-3">Modifier la catégorie</h1>
+
+        {{ include('product_category/admin/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+        {% if not product_category.isRemoved %}
+            {{ include('product_category/admin/_remove_form.html.twig') }}
+        {% else %}
+            {{ include('product_category/admin/_activate_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}

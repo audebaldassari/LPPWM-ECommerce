@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block stylesheets %}
+    <link href="/resources/css/orders.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="order">
+        <h1 class="title">Mes commandes</h1>
+
+        <div class="row">
+		{% for order in app.user.orders %}
+            <div class="col col-12 mt-2">
+                {{ include('assets/orderCard.html.twig', {order: order}) }}
+            </div>
+        {% else %}
+            <div class="col col-12">
+                <h6>Aucune commandes pour le moment.</h6>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

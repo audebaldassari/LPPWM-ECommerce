@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégorie{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {{ include('assets/return.html.twig', {'route': 'admin_product_category_index'}) }}
+        <h1 class="mb-3">Catégorie {{ product_category.label }}</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ product_category.id }}</td>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ product_category.label }}</td>
+                </tr>
+                <tr>
+                    <th>URL de l'image</th>
+                    <td>{{ product_category.image }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% if not product_category.isRemoved %}
+                            <span class="badge rounded-pill bg-success">Activée</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger">Désactivée</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary mb-2" href="{{ path('admin_product_category_edit', {'id': product_category.id}) }}">Modifier</a>
+
+
+        {% if not product_category.isRemoved %}
+            {{ include('product_category/admin/_remove_form.html.twig') }}
+        {% else %}
+            {{ include('product_category/admin/_activate_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}

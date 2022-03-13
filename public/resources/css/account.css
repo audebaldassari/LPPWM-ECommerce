@@ -1,0 +1,15 @@
+.account > .title {
+	font-size: 2rem;
+	color: var(--main-color);
+	margin: 2rem 0;
+}
+
+.account .info-name {
+	font-size: 0.9rem;
+	color: var(--bs-gray);
+}
+
+.account .info-value {
+	font-size: 1.1rem;
+}
+

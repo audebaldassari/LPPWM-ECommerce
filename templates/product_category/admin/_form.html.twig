@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+	<div class="form-outline mb-4">
+		{{ form_widget(form.label, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.label, "Titre", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.label) }}
+	</div>
+
+    <div class="form-outline mb-4">
+		{{ form_widget(form.image, {
+			'attr': {'class': 'form-control'},
+		}) }}
+		{{ form_label(form.image, "URL de l'image", {
+			'label_attr': {'class': 'form-label'}
+		}) }}
+	</div>
+	<div class="field-error">
+		{{ form_errors(form.image) }}
+	</div>
+
+    <button class="btn btn-primary mb-2">{{ button_label|default('Créer') }}</button>
+{{ form_end(form) }}

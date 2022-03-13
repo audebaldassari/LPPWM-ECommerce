@@ -1,0 +1,45 @@
+.order > .title {
+	font-size: 2rem;
+	color: var(--main-color);
+	margin: 2rem 0 0 0;
+}
+
+.order > .date {
+	font-size: 1.25rem;
+	color: var(--bs-gray);
+	font-style: italic;
+	margin-bottom: 1rem;
+}
+
+.order .category-price-row {
+	font-weight: bold;
+}
+
+.order .total-price-row > td {
+	font-weight: bold;
+	font-size: 1.25rem;
+}
+
+.order .total-price-row > td:last-child {
+	color: var(--bs-danger);
+}
+
+.order-card:hover {
+	cursor: pointer;
+	box-shadow: 0 10px 20px 0 rgba(0,0,0,.10);
+}
+
+.order-card .title {
+	color: var(--bs-dark);
+}
+
+.order-card .date {
+	color: var(--bs-gray);
+	font-size: 1rem;
+	font-style: italic;
+}
+
+.order-card .price {
+	color: var(--bs-dark);
+	font-weight: bold;
+}

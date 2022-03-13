@@ -1,0 +1,49 @@
+.basket > .title {
+	font-size: 2rem;
+	color: var(--main-color);
+	margin: 2rem 0;
+}
+
+.basket .category-price {
+	font-size: 1.25rem;
+	font-weight: bold;
+	color: black;
+}
+
+.basket .total-price {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: var(--bs-danger);
+}
+
+.basket-item-card .image-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.basket-item-card .image {
+	height: 5rem;
+}
+
+.basket-item-card .quantity {
+	color: var(--bs-dark);
+}
+
+.basket-item-card .price {
+	font-size: 1.25rem;
+	font-weight: bold;
+	color: black;
+}
+
+.card.basket-item-card .in-stock {
+	color: var(--bs-success);
+}
+
+.card.basket-item-card .last-items {
+	color: var(--bs-warning);
+}
+
+.card.basket-item-card .unavailable {
+	color: var(--bs-danger);
+}

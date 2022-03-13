@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        <h1 class="mb-3">Utilisateurs</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Adresse</th>
+                    <th>Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.fullAddress }}</td>
+                    <td>
+						{% for role in user.roles %}
+							{% if role is same as 'ROLE_USER' %}
+								<span class="badge rounded-pill bg-primary">Utilisateur</span>
+							{% elseif role is same as 'ROLE_ADMIN' %}
+								<span class="badge rounded-pill bg-danger">Administrateur</span>
+							{% endif %}
+						{% endfor %}
+					</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun utilisateur</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

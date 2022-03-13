@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('remove_product_from_basket', {'id': product.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('remove_from_basket' ~ product.id) }}">
+    <button class="btn btn-outline-main btn-block-sm mt-4">Retirer du panier</button>
+</form>

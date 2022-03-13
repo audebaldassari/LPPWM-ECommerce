@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('order_new') }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('order_basket' ~ app.user.id) }}">
+    <button type="submit" class="btn btn-main">
+        Payer {{ totalPrice|number_format(2, ',', '.') }}€
+    </button>
+</form>

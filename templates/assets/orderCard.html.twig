@@ -1,0 +1,15 @@
+<a href="{{ path('order_show', {id: order.id}) }}">
+	<div class="card order-card">
+		<div class="card-body">
+			<div class="row">
+				<div class="col col-8 col-sm-10">
+					<h5 class="title">Commande {{ order.reference }}</h5>
+					<div class="date">Le {{ order.date|date("d/m/Y") }}</div>
+				</div>
+				<div class="col col-4 col-sm-2 d-flex justify-content-center align-items-center">
+					<div class="price">{{ order.totalPrice|number_format(2, ',', '.') }}€</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</a>

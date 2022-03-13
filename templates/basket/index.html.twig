@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block stylesheets %}
+    <link href="/resources/css/basket.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="basket">
+        <h1 class="title">Mon panier</h1>
+
+        {% if is_granted('ROLE_USER') and app.user.getBasket|length > 0 or not is_granted('ROLE_USER') and sessionBasket|length > 0 %}
+            {% if is_granted('ROLE_USER') %}
+                {% for item in app.user.getBasket %}
+                    <div class="row mb-2">
+                        <div class="col col-12">
+                            {{ include('assets/basketItemCard.html.twig', {'item': item}) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for item in sessionBasket %}
+                    <div class="row mb-2">
+                        <div class="col col-12">
+                            {{ include('assets/basketItemCard.html.twig', {'item': item}) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="row mb-2 mt-3">
+                <div class="col col-8 col-sm-10">
+                    <h4>Frais de port</h4>
+                </div>
+                <div class="col col-4 col-sm-2">
+                    <div class="category-price">{{ shippingPrice > 0 ? shippingPrice|number_format(2, ',', '.') : 'Offerts' }}{{ shippingPrice > 0 ? '€' : '' }}</div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col col-8 col-sm-10">
+                    <h2>Total</h2>
+                </div>
+                <div class="col col-4 col-sm-2">
+                    <div class="total-price">{{ totalPrice|number_format(2, ',', '.') }}€</div>
+                </div>
+            </div>
+
+            <div class="d-grid d-sm-block gap-2">
+                <button
+                    class="btn btn-main btn-block-sm"
+                    data-mdb-toggle="modal"
+  					data-mdb-target="#{{ canMakeOrder ? 'modalConfirm' : 'modalError' }}"
+                >
+                    Commander
+                </button>
+            </div>
+        {% else %}
+            <h6>Aucun produit dans le panier...</h6>
+        {% endif %}
+    </div>
+
+    {% if is_granted('ROLE_USER') and app.user.getBasket|length > 0 or not is_granted('ROLE_USER') and sessionBasket|length > 0 %}
+        {% for item in is_granted('ROLE_USER') ? app.user.getBasket : sessionBasket %}
+            <div
+                class="modal fade"
+                id="modalEditItem{{ item.id }}"
+                tabindex="-1"
+                aria-labelledby="modalEditItem{{ item.id }}Label"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEditItem{{ item.id }}Label">Modifier le panier</h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-mdb-dismiss="modal"
+                                aria-label="Fermer"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ include('basket/_edit_form.html.twig', {item: item}) }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-main" data-mdb-dismiss="modal">
+							    Annuler
+						    </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="modal fade"
+                id="modalRemoveItem{{ item.id }}"
+                tabindex="-1"
+                aria-labelledby="modalRemoveItem{{ item.id }}Label"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalRemoveItem{{ item.id }}Label">Retirer du panier</h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-mdb-dismiss="modal"
+                                aria-label="Fermer"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez-vous vraiment retirer "{{ item.product.title }}" de votre panier ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-main" data-mdb-dismiss="modal">
+							    Annuler
+						    </button>
+                            {{ include('basket/_remove_from_basket_form.html.twig', {item: item}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if canMakeOrder and is_granted('ROLE_USER') %}
+        <div
+            class="modal fade"
+            id="modalConfirm"
+            tabindex="-1"
+            aria-labelledby="modalConfirmLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalConfirmLabel">Confirmation d'achat</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-mdb-dismiss="modal"
+                            aria-label="Fermer"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        Vous êtes sur le point d'acheter {{ numberOfProducts|number_format(0, ',', '.') }} article(s) pour le prix de {{ totalPrice|number_format(2, ',', '.') }}€.
+                    </div>
+                    <div class="modal-footer">
+                        {{ include('basket/_order_basket_form.html.twig', {
+                            totalPrice: totalPrice
+                        }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elseif canMakeOrder %}
+        <div
+            class="modal fade"
+            id="modalConfirm"
+            tabindex="-1"
+            aria-labelledby="modalConfirmLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalConfirmLabel">Connexion nécéssaire</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-mdb-dismiss="modal"
+                            aria-label="Fermer"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        Vous devez être connecté pour passer une commande.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-main" data-mdb-dismiss="modal">Fermer</button>
+                        <a type="button" class="btn btn-main" href="{{ path('app_login') }}">Se connecter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div
+            class="modal fade"
+            id="modalError"
+            tabindex="-1"
+            aria-labelledby="modalErrorLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalErrorLabel">Panier invalide</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-mdb-dismiss="modal"
+                            aria-label="Fermer"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        Votre panier contient des articles en quantité insuffisante. Merci de retirer ces articles ou de changer la quantité demandée pour pouvoir commander.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-main" data-mdb-dismiss="modal">
+							Fermer
+						</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

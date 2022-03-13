@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('admin_product_remove', {'id': product.id}) }}" onsubmit="return confirm('Voulez-vous vraiment retirer ce produit du catalogue ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ product.id) }}">
+    <button class="btn btn-danger">Retirer du catalogue</button>
+</form>

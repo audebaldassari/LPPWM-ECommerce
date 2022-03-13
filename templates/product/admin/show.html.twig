@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {{ include('assets/return.html.twig', {'route': 'admin_product_index'}) }}
+        <h1 class="mb-3">Produit {{ product.title }}</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ product.title }}</td>
+                </tr>
+                <tr>
+                    <th>URL de l'image</th>
+                    <td>{{ product.image }}</td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ product.price|number_format(2, ',', '.') }}€</td>
+                </tr>
+                <tr>
+                    <th>Quantité disponible</th>
+                    <td>{{ product.quantity|number_format(0, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td>
+                        <a href="{{ path('admin_product_category_show', {'id': product.category.id}) }}">
+                            {{ product.category.label }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        {% if not product.isRemoved %}
+                            <span class="badge rounded-pill bg-success">Actif</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger">Retiré du catalogue</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary mb-2" href="{{ path('admin_product_edit', {'id': product.id}) }}">Modifier</a>
+
+        {% if product.isRemoved %}
+            {{ include('product/admin/_activate_form.html.twig') }}
+        {% else %}
+            {{ include('product/admin/_remove_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}

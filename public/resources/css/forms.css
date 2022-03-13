@@ -1,0 +1,67 @@
+div.form-container {
+	height: calc(100vh - var(--navbar-height) - 150px);
+	display: flex;
+	align-items: center;
+}
+
+form.form-sm {
+	width: 25rem;
+	max-width: 100%;
+	margin: auto;
+}
+
+form.form-lg {
+	width: 40rem;
+	max-width: 100%;
+	margin: auto;
+}
+
+form .field-error > ul {
+	list-style-type: none;
+	padding: 0;
+	margin-top: -1.5rem;
+	margin-bottom: 1rem;
+}
+
+form .field-error ul > li {
+	font-size: 0.9rem;
+	color: var(--bs-danger);
+}
+
+form .form-section-title {
+	font-size: 1.25rem;
+	margin-bottom: 1rem;
+}
+
+form .form-info {
+	font-size: 1rem;
+	color: var(--bs-gray);
+	margin-bottom: 0.75rem;
+}
+
+select.browser-default {
+	display: block !important;
+}
+
+select.custom-select {
+	display: inline-block;
+	width: 100%;
+	height: calc(1.5em + 0.75rem + 2px);
+	padding: .375rem 1.75rem .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	vertical-align: middle;
+	background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	appearance: none;
+}
+
+select.custom-select:focus {
+	border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,0.25);
+}

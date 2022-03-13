@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.user.username }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/resources/css/account.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+    <div class="account">
+        <h1 class="title">
+            Mon compte
+            {% if is_granted('ROLE_ADMIN') %}
+                <span class="badge rounded-pill bg-primary">Administrateur</span>
+            {% endif %}
+        </h1>
+
+        <div class="info">
+            <div class="info-name">Nom d'utilisateur</div>
+            <div class="info-value">{{ app.user.username }}</div>
+        </div>
+
+        <div class="info">
+            <div class="info-name">Adresse</div>
+            <div class="info-value">{{ app.user.fullAddress }}</div>
+        </div>
+
+        <div class="d-grid d-sm-block gap-2">
+            <a
+                href={{ path('account_edit') }}
+                class="btn btn-main btn-block-sm mt-3"
+            >
+                Modifier mes informations
+            </a>
+            <a
+                href="{{ path('account_password_change') }}"
+                class="btn btn-main btn-block-sm"
+            >
+                Changer de mot de passe
+            </a>
+        </div>
+    </div>
+{% endblock %}

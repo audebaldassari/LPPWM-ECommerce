@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle catégorie{% endblock %}
+
+{% block body %}
+    <div class="mt-5">
+        {{ include('assets/return.html.twig', {'route': 'admin_product_category_index'}) }}
+        <h1 class="mb-3">Nouvelle catégorie</h1>
+
+        {{ include('product_category/admin/_form.html.twig') }}
+    </div>
+{% endblock %}

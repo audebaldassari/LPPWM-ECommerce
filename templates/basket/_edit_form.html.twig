@@ -1,0 +1,14 @@
+<form method="post" action="{{ path(app.user ? 'basket_edit' : 'basket_session_edit', {id: item.id}) }}">
+	{% if app.user %}
+    	<input type="hidden" name="_token" value="{{ csrf_token('basket_edit' ~ app.user.id) }}">
+	{% else %}
+		<input type="hidden" name="id" value="{{ item.id }}">
+	{% endif %}
+	<div class="form-outline">
+		<input type="number" class="form-control" id="newBasketQuantity" name="quantity" min="1" max="{{ item.product.quantity }}" value="{{ item.quantity }}">
+		<label for="newBasketQuantity" class="form-label">Quantité</label>
+	</div>
+    <button type="submit" class="btn btn-main mt-3">
+        Enregistrer
+    </button>
+</form>

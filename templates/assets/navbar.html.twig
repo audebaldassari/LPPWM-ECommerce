@@ -1,0 +1,144 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- Container wrapper -->
+<div class="container-fluid">
+	<!-- Toggle button -->
+	<button
+		class="navbar-toggler"
+		type="button"
+		data-mdb-toggle="collapse"
+		data-mdb-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent"
+		aria-expanded="false"
+		aria-label="Toggle navigation"
+	>
+		<i class="fas fa-bars"></i>
+	</button>
+
+	<!-- Collapsible wrapper -->
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<!-- Navbar brand -->
+		<a class="navbar-brand mt-2 mt-lg-0" href="{{ path('home') }}">
+			<img
+				src="/resources/img/icon.png"
+				height="45"
+				alt="DrumShop logo"
+				loading="lazy"
+			/>
+			<h1>{{ app.request.server.get('APP_NAME') }}</h1>
+		</a>
+		<!-- Left links -->
+		{% if not is_granted('ROLE_ADMIN') %}
+			{% if categories|length > 0 %}
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item dropdown">
+						<a
+							class="nav-link dropdown-toggle"
+							href="#"
+							id="categoriesDropdown"
+							role="button"
+							data-mdb-toggle="dropdown"
+							aria-expanded="false"
+						>
+							Catégories
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+						{% for category in categories %}
+							{% if not category.isRemoved %}
+								<li>
+									<a class="dropdown-item" href="{{ path('product_category_show', {id: category.id}) }}">
+										{{ category.label }}
+									</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+						</ul>
+					</li>
+				</ul>
+			{% endif %}
+		{% else %}
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a
+						class="nav-link {{ 'admin_user' in app.request.attributes.get('_route') ? 'active' : '' }}"
+						href="{{ path('admin_user_index') }}">
+						Utilisateurs
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						class="nav-link {{ 'admin_product_category' in app.request.attributes.get('_route') ? 'active' : '' }}"
+						href="{{ path('admin_product_category_index') }}">
+						Catégories
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						class="nav-link {{ 'admin_product' in app.request.attributes.get('_route') and 'admin_product_category' not in app.request.attributes.get('_route') ? 'active' : '' }}"
+						href="{{ path('admin_product_index') }}">
+						Produits
+					</a>
+				</li>
+			</ul>
+		{% endif %}
+		<!-- Left links -->
+	</div>
+	<!-- Collapsible wrapper -->
+
+	<!-- Right elements -->
+	<div class="d-flex align-items-center">
+		{% if not app.user %}
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<a class="text-reset me-3" href="{{ path('basket') }}">
+					<i class="fas fa-shopping-cart"></i>
+					{% if basketLength > 0 %}
+						<span class="badge rounded-pill badge-notification bg-danger">{{ basketLength }}</span>
+					{% endif %}
+				</a>
+				<li class="nav-item">
+					<a class="btn btn-main" href="{{ path('app_login') }}">Connexion</a>
+				</li>
+			</ul>
+		{% else %}
+			{% if not is_granted('ROLE_ADMIN') %}
+				<a class="text-reset me-3" href="{{ path('basket') }}">
+					<i class="fas fa-shopping-cart"></i>
+					{% if app.user.getBasket|length > 0 %}
+						<span class="badge rounded-pill badge-notification bg-danger">{{ app.user.getBasket|length }}</span>
+					{% endif %}
+				</a>
+			{% endif %}
+
+			<a
+				class="dropdown-toggle d-flex align-items-center hidden-arrow text-reset"
+				href="#"
+				id="navbarDropdownMenuLink"
+				role="button"
+				data-mdb-toggle="dropdown"
+				aria-expanded="false"
+			>
+				<i class="fas fa-user-circle fa-2x"></i>
+			</a>
+			<ul
+				class="dropdown-menu dropdown-menu-end"
+				aria-labelledby="navbarDropdownMenuLink"
+			>
+				<li>
+					<a class="dropdown-item" href="{{ path('account') }}">Mon compte</a>
+				</li>
+				{% if not is_granted('ROLE_ADMIN') %}
+					<li>
+						<a class="dropdown-item" href="{{ path('orders') }}">Mes commandes</a>
+					</li>
+				{% endif %}
+				<li>
+					<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+				</li>
+			</ul>
+		{% endif %}
+	</div>
+	<!-- Right elements -->
+</div>
+<!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
